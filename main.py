@@ -60,9 +60,9 @@ coups=1
 terrain=BoardClean(terrain)
 ShowBoard(terrain)
 while coups < 50:
-	R = -1
-	while R = input("Quelle colonne ? joueur 1 \n") < 0 or R > 6 or R not int:
-		R = input("Quelle colonne ? joueur 1 \n")
+	#R = -1
+	#while R = input("Quelle colonne ? joueur 1 \n") < 0 or R > 6 or R not int:
+	R = input("Quelle colonne ? joueur 1 \n")
 	
 	Play(WhichLine(R,terrain),R,1,terrain)
 	ShowBoard(terrain)
