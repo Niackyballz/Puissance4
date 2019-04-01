@@ -10,8 +10,10 @@ def ShowBoard(Board):
 
 def Play(line, col, player, Board):
 	Board[6-line][col]=player
+	print(6-line,col)
 	if Win(6-line,col,Board,player):
-		print "Vainqueur joueur", player
+		print ("Vainqueur joueur", player)
+		ShowBoard(Board)
 		exit(1)
 	return Board
 
@@ -31,23 +33,40 @@ def WhichLine(col,Board):
 	Line = False
 	i = 0
 	while not Line:
-		if Board[6-i][col] != 0:
+		if Board[6 - i][col] != 0:
 			i += 1
 		else:
 			return i
 
+
 def Win(x,y,board,number):
-	if x+3 < 7:
+	if x + 3 < 7:
+		#vainqueur haut en bas
 		if board[x][y] == number and board[x+1][y] == number and board[x+2][y] == number and board[x+3][y] == number:
 			return True
-	elif x-3 < -1:
-		if board[x][y] == number and board[x-1][y] == number and board[x-2][y] == number and board[x-3][y] == number:
-			return True
-	elif y+3 < 7:
+	if y + 3 < 7:
+		#vainqueur ligne vers la droite
 		if board[x][y] == number and board[x][y+1] == number and board[x][y+2] == number and board[x][y+3] == number:
 			return True
-	elif y-3 < -1:
+	if y - 3 > -1:
+		#vainqueur ligne vers la gauche
 		if board[x][y] == number and board[x][y-1] == number and board[x][y-2] == number and board[x][y-3] == number:
+			return True
+	if y - 2 > -1 and y + 1 < 7:
+		#vainqueur ligne 2 gauche 1 droite
+		if board[x][y-2] == number and board[x][y-1] == number and board[x][y] == number and board[x][y+1] == number:
+			return True
+	if y - 1 > -1 and y + 2 < 7:
+		#vainqueur ligne 1 gauche 2 droite
+		if board[x][y-1] == number and board[x][y] == number and board[x][y+1] == number and board[x][y+2] == number:
+			return True
+	if x+3 < 7 and y+3 < 7:
+		#vainqueur diagonale vers le haut droite
+		if board[x][y] == number and board[x+1][y+1] == number and board[x+2][y+2] == number and board[x+3][y+3] == number:
+			return True
+	if x-3 < -1 and y -3 < -1:
+		#vainqueur diagonale vers le bas gauche
+		if board[x][y] == number and board[x-1][y-1] == number and board[x-2][y-2] == number and board[x-3][y-3] == number:
 			return True
 	else:
 		return False
@@ -60,10 +79,10 @@ coups=1
 terrain=BoardClean(terrain)
 ShowBoard(terrain)
 while coups < 50:
-	#R = -1
+	R = -1
 	#while R = input("Quelle colonne ? joueur 1 \n") < 0 or R > 6 or R not int:
 	R = input("Quelle colonne ? joueur 1 \n")
-	
+
 	Play(WhichLine(R,terrain),R,1,terrain)
 	ShowBoard(terrain)
 	W = input("Quelle colonne ? joueur 2 \n")
