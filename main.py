@@ -10,7 +10,6 @@ def ShowBoard(Board):
 
 def Play(line, col, player, Board):
 	Board[6-line][col]=player
-	print(6-line,col)
 	if Win(6-line,col,Board,player):
 		print ("Vainqueur joueur", player)
 		ShowBoard(Board)
@@ -61,28 +60,49 @@ def Win(x,y,board,number):
 		if board[x][y-1] == number and board[x][y] == number and board[x][y+1] == number and board[x][y+2] == number:
 			return True
 	if x+3 < 7 and y+3 < 7:
-		#vainqueur diagonale vers le haut droite
+		#vainqueur diagonale vers le bas droite
 		if board[x][y] == number and board[x+1][y+1] == number and board[x+2][y+2] == number and board[x+3][y+3] == number:
 			return True
-	if x-3 < -1 and y -3 < -1:
+	if x+3 < 7 and y -3 > -1:
 		#vainqueur diagonale vers le bas gauche
+		if board[x][y] == number and board[x+1][y-1] == number and board[x+2][y-2] == number and board[x+3][y-3] == number:
+			return True
+	if x-3 > -1 and y +3 < 7:
+		#vainqueur diagonale vers le haut droite
+		if board[x][y] == number and board[x-1][y+1] == number and board[x-2][y+2] == number and board[x-3][y+3] == number:
+			return True
+	if x-3 > -1 and y -3 > -1:
+		#vainqueur diagonale vers le haut gauche
 		if board[x][y] == number and board[x-1][y-1] == number and board[x-2][y-2] == number and board[x-3][y-3] == number:
 			return True
+	if x+2 < 7 and y+2 < 7 and x-1 > -1 and y-1 > -1 :
+		#vainqueur diagonale vers le bas droite 1 + piece + 2
+		if board[x-1][y-1] == number and board[x][y] == number and board[x+1][y+1] == number and board[x+2][y+2] == number:
+			return True
+	if x+1 < 7 and y+1 < 7 and x-2 > -1 and y-2 > -1 :
+		#vainqueur diagonale vers le bas droite 2 + piece + 1
+		if board[x-2][y-2] == number and board[x-1][y-1] == number and board[x][y] == number and board[x+1][y+1] == number:
+			return True	
+	if x+1 < 7 and y+2 < 7 and x-2 > -1 and y-1 > -1 :
+		#vainqueur diagonale vers le bas gauche 1 + piece + 2
+		if board[x+1][y-1] == number and board[x][y] == number and board[x-1][y+1] == number and board[x-2][y+2] == number:
+			return True
+	if x+2 < 7 and y+1 < 7 and x-1 > -1 and y-2 > -1 :
+		#vainqueur diagonale vers le bas gauche 2 + piece + 1
+		if board[x+2][y-2] == number and board[x+1][y-1] == number and board[x][y] == number and board[x-1][y+1] == number:
+			return True		
 	else:
 		return False
 	
 
 ###################################
-
 terrain=0
-coups=1
 terrain=BoardClean(terrain)
+coups=0
 ShowBoard(terrain)
-while coups < 50:
-	R = -1
-	#while R = input("Quelle colonne ? joueur 1 \n") < 0 or R > 6 or R not int:
+while coups < 49:
+#	if input("Quelle colonne ? joueur 1 \n") != {0:6}:
 	R = input("Quelle colonne ? joueur 1 \n")
-
 	Play(WhichLine(R,terrain),R,1,terrain)
 	ShowBoard(terrain)
 	W = input("Quelle colonne ? joueur 2 \n")
